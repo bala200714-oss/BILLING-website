@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SBM RESTAURANT | Restaurant Billing & POS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar glass-card">
+      <div class="brand-block">
+        <div class="brand-mark">BM</div>
+        <div>
+          <span class="brand-title">SBM RESTAURANT</span>
+          <p class="brand-subtitle">Premium Restaurant POS</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-link active" data-page="dashboard"><span>Dashboard</span></button>
+        <button class="nav-link" data-page="menu"><span>Menu Manager</span></button>
+        <button class="nav-link" data-page="billing"><span>Billing</span></button>
+        <button class="nav-link" data-page="reports"><span>Sales Report</span></button>
+        <button class="nav-link" data-page="orders"><span>Order History</span></button>
+      </nav>
+      <div class="sidebar-meta">
+        <div class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span>Light</span>
+          <div class="toggle-track"><div class="toggle-thumb"></div></div>
+          <span>Dark</span>
+        </div>
+        <div class="version-chip">v2.1</div>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar glass-card">
+        <div class="search-wrapper">
+          <label class="search-field">
+            <input id="globalSearch" type="search" placeholder="Search menu, orders, reports..." />
+            <span class="search-icon">&#128269;</span>
+          </label>
+        </div>
+        <div class="topbar-actions">
+          <div class="clock-card">
+            <span id="liveTime">00:00</span>
+            <small id="liveDate">Loading date...</small>
+          </div>
+          <button class="icon-button" id="toastPreviewBtn" title="Notifications">&#128276;</button>
+          <div class="avatar-card">
+            <span>BM</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="page page-dashboard active" id="dashboardPage">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Welcome back, Chef</p>
+            <h1>Restaurant operations made effortless.</h1>
+          </div>
+          <button class="primary-btn" id="dailySummaryBtn">Quick Sales Brief</button>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="stat-card accent-1 glass-card">
+            <p>Total Orders</p>
+            <h2 id="statOrders">0</h2>
+            <small>Live order tracking with real-time refresh.</small>
+          </article>
+          <article class="stat-card accent-2 glass-card">
+            <p>Total Sales</p>
+            <h2 id="statSales">₹0</h2>
+            <small>Revenue recognized from settled bills.</small>
+          </article>
+          <article class="stat-card accent-3 glass-card">
+            <p>Today's Revenue</p>
+            <h2 id="statRevenue">₹0</h2>
+            <small>Updated automatically every minute.</small>
+          </article>
+          <article class="stat-card accent-4 glass-card">
+            <p>Top Selling Item</p>
+            <h2 id="statTopItem">N/A</h2>
+            <small>Based on current week.</small>
+          </article>
+        </div>
+
+        <div class="section-split">
+          <div class="analytics-panel glass-card animate-fade-up">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Sales analytics</p>
+                <h2>Weekly revenue trend</h2>
+              </div>
+              <span class="badge">Live</span>
+            </div>
+            <div class="chart-card">
+              <svg id="salesTrendChart" viewBox="0 0 800 320" preserveAspectRatio="none"></svg>
+            </div>
+          </div>
+
+          <div class="overview-panel glass-card animate-fade-up delay-sm">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Quick insights</p>
+                <h2>Peak service window</h2>
+              </div>
+            </div>
+            <ul class="insight-list">
+              <li><strong id="peakHour">-</strong> busiest hour today</li>
+              <li><strong id="popularCategory">-</strong> top menu category</li>
+              <li><strong id="availableItems">-</strong> items ready to sell</li>
+            </ul>
+            <div class="live-flavor">
+              <p>New menu items appear instantly in billing.</p>
+              <span class="chip">Premium glass interface</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page page-menu" id="menuPage">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Menu manager</p>
+            <h1>Craft your menu with instant updates.</h1>
+          </div>
+          <button class="secondary-btn" id="addItemButton">+ Add new item</button>
+        </div>
+
+        <div class="menu-topbar glass-card">
+          <div class="menu-search">
+            <input id="menuSearch" type="search" placeholder="Search menu item name or category" />
+          </div>
+          <div class="filter-pill-group">
+            <button class="pill active" data-filter="all">All</button>
+            <button class="pill" data-filter="South Indian">South Indian</button>
+            <button class="pill" data-filter="Beverages">Beverages</button>
+          </div>
+        </div>
+
+        <div class="menu-manager">
+          <div class="menu-items" id="menuItemsList"></div>
+          <div class="menu-form glass-card" id="menuFormCard">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Food item editor</p>
+                <h2 id="menuFormTitle">Add new item</h2>
+              </div>
+            </div>
+            <form id="menuForm">
+              <div class="form-grid">
+                <label>
+                  Item name
+                  <input name="name" required maxlength="40" placeholder="Ex: Truffle Mushroom Pasta" />
+                </label>
+                <label>
+                  Category
+                  <select name="category" required>
+                    <option value="South Indian">South Indian</option>
+                    <option value="Beverages">Beverages</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Desserts">Desserts</option>
+                    <option value="Salads">Salads</option>
+                  </select>
+                </label>
+                <label>
+                  Price (₹)
+                  <input name="price" type="number" min="1" step="0.01" required placeholder="120.00" />
+                </label>
+                <label>
+                  Image URL
+                  <input name="image" type="url" placeholder="https://..." />
+                </label>
+                <label class="full-width">
+                  Availability
+                  <select name="available" required>
+                    <option value="true">Available</option>
+                    <option value="false">Out of stock</option>
+                  </select>
+                </label>
+                <label class="full-width">
+                  Description
+                  <textarea name="description" rows="3" placeholder="Short menu description"></textarea>
+                </label>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="secondary-btn" id="cancelMenuEdit">Cancel</button>
+                <button type="submit" class="primary-btn">Save item</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="page page-billing" id="billingPage">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Point of sale</p>
+            <h1>Fast ordering, billing, and checkout.</h1>
+          </div>
+          <button class="secondary-btn" id="clearCartBtn">Clear cart</button>
+        </div>
+
+        <div class="billing-grid">
+          <section class="menu-panel glass-card">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Menu catalog</p>
+                <h2>Tap to add items to the cart</h2>
+              </div>
+              <input id="billingSearch" type="search" placeholder="Search food items" />
+            </div>
+            <div class="billing-items" id="billingMenuList"></div>
+          </section>
+
+          <aside class="cart-panel glass-card">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Order cart</p>
+                <h2>Current bill</h2>
+              </div>
+            </div>
+            <div class="cart-list" id="cartItems"></div>
+            <div class="billing-summary">
+              <div class="summary-row"><span>Subtotal</span><strong id="subtotalAmount">₹0.00</strong></div>
+              <div class="summary-row"><span>GST 8%</span><strong id="taxAmount">₹0.00</strong></div>
+              <div class="summary-row discount-row">
+                <label>Discount</label>
+                <input id="discountInput" type="number" min="0" max="50" step="1" value="0" />
+                <span>%</span>
+              </div>
+              <div class="summary-row total-row"><span>Total payable</span><strong id="totalAmount">₹0.00</strong></div>
+            </div>
+            <button class="primary-btn full-width" id="payNowBtn">Pay Now</button>
+            <div class="invoice-preview glass-card mini-card" id="invoicePreview">
+              <p class="eyebrow">Invoice preview</p>
+              <div class="invoice-line"><span>Items</span><strong id="invoiceItems">0</strong></div>
+              <div class="invoice-line"><span>Status</span><strong id="invoiceStatus">Pending</strong></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="page page-reports" id="reportsPage">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Performance reports</p>
+            <h1>Revenue data for smarter decisions.</h1>
+          </div>
+          <button class="secondary-btn" id="exportReportBtn">Export CSV</button>
+        </div>
+
+        <div class="reports-grid">
+          <div class="report-card glass-card">
+            <p>Daily sales</p>
+            <h2 id="reportDaily">₹0</h2>
+          </div>
+          <div class="report-card glass-card">
+            <p>Weekly sales</p>
+            <h2 id="reportWeekly">₹0</h2>
+          </div>
+          <div class="report-card glass-card">
+            <p>Monthly sales</p>
+            <h2 id="reportMonthly">₹0</h2>
+          </div>
+          <div class="report-card glass-card">
+            <p>Top item</p>
+            <h2 id="reportTopItem">-</h2>
+          </div>
+        </div>
+
+        <div class="reports-split">
+          <div class="report-list glass-card">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Most sold</p>
+                <h2>Best performing menu items</h2>
+              </div>
+            </div>
+            <ul id="bestItemsList"></ul>
+          </div>
+          <div class="report-chart glass-card">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Sales rhythm</p>
+                <h2>Hourly revenue map</h2>
+              </div>
+            </div>
+            <div class="bar-grid" id="peakSalesBars"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page page-orders" id="ordersPage">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Order archives</p>
+            <h1>Track every payment and table order.</h1>
+          </div>
+          <button class="secondary-btn" id="clearHistoryBtn">Clear history</button>
+        </div>
+        <div class="orders-table glass-card">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Recent orders</p>
+              <h2>Last 12 transactions</h2>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr><th>#</th><th>Transaction</th><th>Items</th><th>Amount</th><th>Status</th><th>Time</th></tr>
+            </thead>
+            <tbody id="orderHistoryBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hide" id="paymentBackdrop"></div>
+  <div class="modal-panel hide" id="paymentModal">
+    <button class="close-modal" id="closePaymentModal">×</button>
+    <div class="payment-flow">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">Secure checkout</p>
+          <h2>Pay with UPI & QR</h2>
+        </div>
+        <span class="chip">Premium flow</span>
+      </div>
+      <div class="payment-body" id="paymentBody">
+        <div class="payment-step" id="paymentLoading">
+          <div class="spinner"></div>
+          <h3>Preparing secure payment</h3>
+          <p>Fetching payment data and generating QR code.</p>
+        </div>
+        <div class="payment-step hide" id="paymentQRStep">
+          <div class="qr-card">
+            <img id="paymentQRCode" src="" alt="payment QR code" />
+          </div>
+          <div class="payment-details">
+            <div class="detail-row"><span>Total payable</span><strong id="payAmountText">₹0.00</strong></div>
+            <div class="detail-row"><span>UPI ID</span><strong>opuspos@upi</strong></div>
+            <div class="detail-row"><span>Reference</span><strong id="payRefText">#REF12345</strong></div>
+            <button class="primary-btn full-width" id="simulatePayBtn">Simulate payment</button>
+          </div>
+        </div>
+        <div class="payment-step hide" id="paymentSuccessStep">
+          <div class="success-illustration">
+            <span>✓</span>
+          </div>
+          <h3>Payment Successful</h3>
+          <p>Your transaction has been confirmed. Receipt is ready.</p>
+          <div class="success-details">
+            <div><strong id="successTxId">#TX00000</strong><small>Transaction ID</small></div>
+            <div><strong id="successTimestamp">00:00</strong><small>Timestamp</small></div>
+          </div>
+          <button class="secondary-btn full-width" id="printReceiptBtn">Print receipt</button>
+          <button class="secondary-btn full-width" id="closeSuccessModal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer" aria-live="polite"></div>
+
+  <section id="printReceiptArea" class="print-area hide">
+    <div class="receipt-sheet" id="receiptPrintContent"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
