@@ -28,7 +28,6 @@ const ui = {
   billingMenuList: document.getElementById('billingMenuList'),
   cartItems: document.getElementById('cartItems'),
   subtotalAmount: document.getElementById('subtotalAmount'),
-  taxAmount: document.getElementById('taxAmount'),
   totalAmount: document.getElementById('totalAmount'),
   discountInput: document.getElementById('discountInput'),
   invoiceItems: document.getElementById('invoiceItems'),
@@ -59,14 +58,14 @@ const ui = {
 };
 
 const sampleData = [
-  { id: 'm1', name: 'Idly', category: 'South Indian', price: 3.50, available: true, image: 'https://images.unsplash.com/photo-1590949726162-03a0adae155b?auto=format&fit=crop&w=600&q=80', description: 'Soft steamed rice cakes served with sambar and coconut chutney.' },
-  { id: 'm2', name: 'Dosa', category: 'South Indian', price: 5.50, available: true, image: 'https://images.unsplash.com/photo-1615399962320-cae8ce6b7f86?auto=format&fit=crop&w=600&q=80', description: 'Crispy fermented crepe with spicy potato masala and chutney.' },
-  { id: 'm3', name: 'Vada', category: 'South Indian', price: 4.25, available: true, image: 'https://images.unsplash.com/photo-1598511728010-cbc69b6a8c67?auto=format&fit=crop&w=600&q=80', description: 'Golden lentil donut with aromatic spices, served hot with sambar.' },
-  { id: 'm4', name: 'Poori', category: 'South Indian', price: 4.50, available: true, image: 'https://images.unsplash.com/photo-1608252319032-ba2e2da8ef3a?auto=format&fit=crop&w=600&q=80', description: 'Fluffy deep-fried bread paired with potato masala and chutney.' },
-  { id: 'm5', name: 'Chappathi', category: 'South Indian', price: 4.00, available: true, image: 'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=600&q=80', description: 'Whole wheat flatbread served warm with coconut chutney and curry.' },
-  { id: 'm6', name: 'Pongal', category: 'South Indian', price: 5.95, available: true, image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80', description: 'Creamy rice and lentil porridge tempered with cumin and ghee.' },
-  { id: 'm7', name: 'Tea', category: 'Beverages', price: 2.25, available: true, image: 'https://images.unsplash.com/photo-1516910817561-47aa9115b0f6?auto=format&fit=crop&w=600&q=80', description: 'Refreshing masala tea brewed with aromatic spices and milk.' },
-  { id: 'm8', name: 'Coffee', category: 'Beverages', price: 2.75, available: true, image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80', description: 'Strong filter coffee served hot with a rich crema layer.' }
+  { id: 'm1', name: 'Idly', category: 'South Indian', price: 20, available: true, image: 'IDLY.png', description: 'Soft steamed rice cakes served with sambar and coconut chutney.' },
+  { id: 'm2', name: 'Dosa', category: 'South Indian', price: 60, available: true, image: 'https://images.unsplash.com/photo-1615399962320-cae8ce6b7f86?auto=format&fit=crop&w=600&q=80', description: 'Crispy fermented crepe with spicy potato masala and chutney.' },
+  { id: 'm3', name: 'Vada', category: 'South Indian', price: 15, available: true, image: 'https://images.unsplash.com/photo-1598511728010-cbc69b6a8c67?auto=format&fit=crop&w=600&q=80', description: 'Golden lentil donut with aromatic spices, served hot with sambar.' },
+  { id: 'm4', name: 'Poori', category: 'South Indian', price: 60, available: true, image: 'https://images.unsplash.com/photo-1608252319032-ba2e2da8ef3a?auto=format&fit=crop&w=600&q=80', description: 'Fluffy deep-fried bread paired with potato masala and chutney.' },
+  { id: 'm5', name: 'Chappathi', category: 'South Indian', price: 60, available: true, image: 'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=600&q=80', description: 'Whole wheat flatbread served warm with coconut chutney and curry.' },
+  { id: 'm6', name: 'Pongal', category: 'South Indian', price: 70, available: true, image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80', description: 'Creamy rice and lentil porridge tempered with cumin and ghee.' },
+  { id: 'm7', name: 'Tea', category: 'Beverages', price: 20, available: true, image: 'https://images.unsplash.com/photo-1516910817561-47aa9115b0f6?auto=format&fit=crop&w=600&q=80', description: 'Refreshing masala tea brewed with aromatic spices and milk.' },
+  { id: 'm8', name: 'Coffee', category: 'Beverages', price: 30, available: true, image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80', description: 'Strong filter coffee served hot with a rich crema layer.' }
 ];
 
 const loadState = () => {
@@ -236,12 +235,11 @@ const updateCart = () => {
     `;
   }).join('');
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const tax = subtotal * 0.08;
+  const tax = 0;
   const discountPercent = Number(ui.discountInput.value) || 0;
   const discount = subtotal * (discountPercent / 100);
   const total = Math.max(0, subtotal + tax - discount);
   ui.subtotalAmount.textContent = formatCurrency(subtotal);
-  ui.taxAmount.textContent = formatCurrency(tax);
   ui.totalAmount.textContent = formatCurrency(total);
   ui.invoiceItems.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
   ui.invoiceStatus.textContent = cart.length ? 'Pending' : 'Empty';
@@ -362,7 +360,6 @@ const prepareReceipt = (currentOrder) => {
       </div>
     </div>
     ${lines}
-    <div class="receipt-row"><span>Tax (8%)</span><strong>${formatCurrency(currentOrder.total * 0.08 / 1.08)}</strong></div>
     <div class="receipt-row"><span>Total Paid</span><strong>${formatCurrency(currentOrder.total)}</strong></div>
     <div class="receipt-row"><span>Payment</span><strong>${currentOrder.status}</strong></div>
     <p style="margin-block-start:24px;color:var(--muted);">Thank you for using OpusPOS. Retain this receipt for your records.</p>
@@ -392,7 +389,6 @@ const printReceipt = () => {
       </div>
     </div>
     ${lines}
-    <div class="receipt-row"><span>Tax (8%)</span><strong>${formatCurrency(currentOrder.total * 0.08 / 1.08)}</strong></div>
     <div class="receipt-row"><span>Total Paid</span><strong>${formatCurrency(currentOrder.total)}</strong></div>
     <div class="receipt-row"><span>Payment</span><strong>${currentOrder.status}</strong></div>
     <p style="margin-block-start:24px;color:var(--muted);">Thank you for using OpusPOS. Retain this receipt for your records.</p>
