@@ -59,13 +59,13 @@ const ui = {
 
 const sampleData = [
   { id: 'm1', name: 'Idly', category: 'South Indian', price: 20, available: true, image: 'IDLY.png', description: 'Soft steamed rice cakes served with sambar and coconut chutney.' },
-  { id: 'm2', name: 'Dosa', category: 'South Indian', price: 60, available: true, image: 'DOSA.png', description: 'Crispy fermented crepe with spicy potato masala and chutney.' },
-  { id: 'm3', name: 'Vada', category: 'South Indian', price: 15, available: true, image: 'https://images.unsplash.com/photo-1598511728010-cbc69b6a8c67?auto=format&fit=crop&w=600&q=80', description: 'Golden lentil donut with aromatic spices, served hot with sambar.' },
-  { id: 'm4', name: 'Poori', category: 'South Indian', price: 60, available: true, image: 'https://images.unsplash.com/photo-1608252319032-ba2e2da8ef3a?auto=format&fit=crop&w=600&q=80', description: 'Fluffy deep-fried bread paired with potato masala and chutney.' },
-  { id: 'm5', name: 'Chappathi', category: 'South Indian', price: 60, available: true, image: 'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=600&q=80', description: 'Whole wheat flatbread served warm with coconut chutney and curry.' },
-  { id: 'm6', name: 'Pongal', category: 'South Indian', price: 70, available: true, image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80', description: 'Creamy rice and lentil porridge tempered with cumin and ghee.' },
-  { id: 'm7', name: 'Tea', category: 'Beverages', price: 20, available: true, image: 'https://images.unsplash.com/photo-1516910817561-47aa9115b0f6?auto=format&fit=crop&w=600&q=80', description: 'Refreshing masala tea brewed with aromatic spices and milk.' },
-  { id: 'm8', name: 'Coffee', category: 'Beverages', price: 30, available: true, image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80', description: 'Strong filter coffee served hot with a rich crema layer.' }
+  { id: 'm2', name: 'Dosa', category: 'South Indian', price: 60, available: true, image: 'dosa.png', description: 'Crispy fermented crepe with spicy potato masala and chutney.' },
+  { id: 'm3', name: 'Vada', category: 'South Indian', price: 15, available: true, image: 'vada.png', description: 'Golden lentil donut with aromatic spices, served hot with sambar.' },
+  { id: 'm4', name: 'Poori', category: 'South Indian', price: 60, available: true, image: 'poori.png', description: 'Fluffy deep-fried bread paired with potato masala and chutney.' },
+  { id: 'm5', name: 'Chappathi', category: 'South Indian', price: 60, available: true, image: 'chappathi.png', description: 'Whole wheat flatbread served warm with coconut chutney and curry.' },
+  { id: 'm6', name: 'Pongal', category: 'South Indian', price: 70, available: true, image: 'pongal.png', description: 'Creamy rice and lentil porridge tempered with cumin and ghee.' },
+  { id: 'm7', name: 'Tea', category: 'Beverages', price: 20, available: true, image: 'tea.png', description: 'Refreshing masala tea brewed with aromatic spices and milk.' },
+  { id: 'm8', name: 'Coffee', category: 'Beverages', price: 30, available: true, image: 'coffee.png', description: 'Strong filter coffee served hot with a rich crema layer.' }
 ];
 
 const loadState = () => {
